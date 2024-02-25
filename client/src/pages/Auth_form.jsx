@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FacebookLogin from 'react-facebook-login';
 import logo from '../assets/logo.png'
 import image from '../assets/dog_image.png'; 
 import facebook from '../assets/logo-facebook.png';
@@ -6,9 +7,22 @@ import gmail from '../assets/logo-gmail.svg';
 import line from '../assets/line.svg';
 
 function AuthForm() {
+  const responseFacebook = (response) => {
+    console.log(response);
+    // Gérer la réponse de connexion de Facebook ici
+  };
 
   return (
     <>
+    <div>
+      <FacebookLogin
+        appId="VOTRE_APP_ID_FACEBOOK"
+        autoLoad={false}
+        fields="name,email,picture"
+        callback={responseFacebook}
+        icon="fa-facebook" // Optionnel : icône du bouton
+      />
+    </div>
     <div className='flex flex-row justify-end space-x-40'>
         <div className='min-h-screen '>
             <div className='mt-48'>
