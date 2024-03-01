@@ -9,9 +9,12 @@ import image7 from '../assets/Rectangle_6.svg';
 import image8 from '../assets/Rectangle_7.svg';
 import image9 from '../assets/Rectangle_8.svg';
 import deco from '../assets/Component_6.svg'; 
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 function Home() {
   return (
     <>
+    <Header/>
     <div className='flex flex-row justify-between m-20 mb-6'>
         <div className='w-1/3'>
              <img src={image1} alt="image1" className=' w-full ml-6 m-6' /> 
@@ -50,7 +53,7 @@ function Home() {
                 
         </div>
     </div>
-             
+        <Footer/>
     </> 
   
   );
