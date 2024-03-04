@@ -6,7 +6,7 @@ import heart from '../assets/majesticons_heart.svg';
 import user from '../assets/majesticons_user-line.svg';
 function Footer() {
   return (
-        <footer className='bg-white w-full fixed inset-x-0 bottom-0 h-16'>
+        <footer className='bg-black bg-opacity-75 w-full fixed inset-x-0 bottom-0 h-12 border-2 border-[#3a142a]'>
          <div className='flex flex-row justify-between '>
           <img src={home} alt="Logo de mon application" className=' w-6 ml-6 m-4' /> 
           <img src={explorer} alt="Logo de mon application" className='  w-6 ml-6 m-4' /> 
