@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../assets/logo.png'
 function Header() {
   return (
-    <header className='border border-[#2BCCC0] rounded-b-3xl  h-20 flex flex-row sticky top-0 backdrop-blur-md bg-gradient-to-b from-transparent to-[rgba(43,204,192,0.5)]'>
+    <header className='border border-[#2BCCC0] rounded-b-3xl  h-20 flex flex-row sticky top-0 backdrop-blur-md bg-gradient-to-b from-transparent to-[rgba(43,204,192,0.5)]'style={{ zIndex: '2' }}>
       <div className='flex justify-between'>
         <img src={logo} alt="Logo de mon application" className='h-16 ml-48 m-2' /> 
       </div>          
