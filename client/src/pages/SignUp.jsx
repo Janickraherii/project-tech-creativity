@@ -6,33 +6,51 @@ import line from '../assets/line.svg';
 import backgroundImg from '../assets/papier.jpg';
 
 function SignUp() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: ''
+  });
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Envoyer les données du formulaire au serveur pour créer le compte utilisateur
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      console.log(formData);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('User created successfully:', data);
+        alert('User created successfully!');
+        // Optionally redirect the user to another page or display a success message
+      } else {
+        console.error('Failed to create user:', response.status);
+        alert('Failed to create user. Please try again.');
+        console.log(response)
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('An error occurred while creating the user. Please try again later.');
+    }
   };
-
   return (
     <>
-  <div className="flex justify-center items-center h-screen" style={{ backgroundImage: `url(${backgroundImg})`,
+    <form onSubmit={handleSubmit}>
+    <div className="flex justify-center items-center h-screen" style={{ backgroundImage: `url(${backgroundImg})`,
         backgroundSize: 'cover', // Pour que l'image remplisse entièrement le fond
         backgroundPosition: 'center', // Pour centrer l'image
         minHeight: '100vh', // Pour que le conteneur prenne au moins toute la hauteur de la vue
@@ -44,32 +62,41 @@ function SignUp() {
         <div className="mt-24 ml-12">
           <img src={logo} alt="Logo" className="w-40 mb-4" />
           <p className="text-xs text-[#7BE3DB] mb-6">Libérez l'humour numérique sans limites !</p>
-          <form onSubmit={handleSubmit} className="bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-xl">
-            <input
+          <div  className="bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-xl">
+          <input
               type="text"
               placeholder="Nom d'utilisateur"
-              value={username}
-              onChange={handleUsernameChange}
+              name="lastname" value={formData.lastname} onChange={handleChange} 
               className="bg-transparent text-[#7BE3DB] border-b border-[#7BE3DB] rounded-t-lg text-xs py-3 px-4 outline-none mb-4"
-            />
+           required  />
+            <input
+              type="text"
+              placeholder="prénom d'utilisateur"
+              name="firstname" value={formData.firstname} onChange={handleChange} 
+              className="bg-transparent text-[#7BE3DB] border-b border-[#7BE3DB] rounded-t-lg text-xs py-3 px-4 outline-none mb-4"
+           required  />
             <input
               type="email"
+              name="email"
               placeholder="Adresse email"
-              value={email}
-              onChange={handleEmailChange}
+              value={formData.email}
+              onChange={handleChange}
+                   
               className="bg-transparent text-[#7BE3DB] border-b border-[#7BE3DB] text-xs py-3 px-4 outline-none mb-4"
-            />
+              required />
             <input
               type="password"
+              name="password"
               placeholder="Mot de passe"
-              value={password}
-              onChange={handlePasswordChange}
+              value={formData.password}
+              onChange={handleChange} 
+                 
               className="bg-transparent text-[#7BE3DB] border-b border-[#7BE3DB] rounded-b-lg text-xs py-3 px-4 outline-none mb-4"
-            />
+              required />
             <button type="submit" className="bg-[#DA51A0] bg-opacity-70 backdrop-blur-lg rounded-3xl text-white text-xs py-3 mt-2 w-full">
               Créer un compte
             </button>
-          </form>
+          </div>
           <img src={line} alt="Ligne décorative" className="w-64 my-6" />
           
         </div>
@@ -86,6 +113,11 @@ function SignUp() {
       
     </div>
   </div>
+    
+    </form>
+            
+      
+  
 </>
 
   

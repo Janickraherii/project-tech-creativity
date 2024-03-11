@@ -7,8 +7,8 @@ import Dropzone from './pages/Dropzone';
 import AuthForm from './pages/AuthForm';
 import SignUp from './pages/SignUp';
 
-const App = () => {
-  return (
+function App() {
+    return (
     <Router>
       <div className='bg-[#111111] h-screen'> 
         <Routes>
