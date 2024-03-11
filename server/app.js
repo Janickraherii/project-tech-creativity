@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -23,7 +24,6 @@ app.get('/api/users', async (req, res) => {
   try {
     // Retrieve all users from the database
     const users = await prisma.user.findMany();
-
     // Send the list of users in response
     res.status(200).json(users);
   } catch (error) {
