@@ -2,33 +2,37 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const cors = require('cors');
 
 const app = express();
 
-// Middleware pour parser les données JSON dans les requêtes POST
+
+const userRouter = require('./routes/userRoutes');
+app.use('/users', userRouter);
+
+// Use the cors middleware
+app.use(cors());
 app.use(express.json());
 
-// Route pour créer un nouvel utilisateur
-app.post('/createUser', async (req, res) => {
-  const { username, email, password } = req.body;
+// Import the createUser function from userController.js
+const { createUser } = require('../server/controllers/userController');
 
+// Route for creating a new user
+app.post('/api/users', createUser);
+app.get('/api/users', async (req, res) => {
   try {
-    const newUser = await prisma.user.create({
-      data: {
-        username,
-        email,
-        password,
-      },
-    });
-    console.log('Nouvel utilisateur créé :', newUser);
-    res.status(201).json({ message: 'Utilisateur créé avec succès !', user: newUser });
+    // Retrieve all users from the database
+    const users = await prisma.user.findMany();
+
+    // Send the list of users in response
+    res.status(200).json(users);
   } catch (error) {
-    console.error('Erreur lors de la création de l\'utilisateur :', error);
-    res.status(500).json({ message: 'Une erreur est survenue lors de la création de l\'utilisateur.' });
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'An error occurred while fetching users.' });
   }
 });
 
-// Démarrer le serveur
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

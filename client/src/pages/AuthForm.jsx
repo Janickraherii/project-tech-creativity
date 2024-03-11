@@ -5,13 +5,13 @@ import image from '../assets/dog_image.png';
 import facebook from '../assets/logo-facebook.png';
 import gmail from '../assets/logo-gmail.svg';
 import line from '../assets/line.svg';
-import SignUp from './SignUp';
+// import SignUp from './SignUp';
 
 function AuthForm() {
-  const responseFacebook = (response) => {
-    console.log(response);
-    // Gérer la réponse de connexion de Facebook ici
-  };
+  // const responseFacebook = (response) => {
+  //   console.log(response);
+  //   // Gérer la réponse de connexion de Facebook ici
+  // };
 
   return (
     <>
