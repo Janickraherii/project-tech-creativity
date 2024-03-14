@@ -6,6 +6,8 @@ import Profile from './pages/Profile';
 import Dropzone from './pages/Dropzone';
 import AuthForm from './pages/AuthForm';
 import SignUp from './pages/SignUp';
+import Modification from './pages/Modification';
+import UseApi from './pages/UseApi';
 
 function App() {
     return (
@@ -18,6 +20,9 @@ function App() {
           <Route exact path="/dropzone" element={<Dropzone />} />
           <Route exact path="/createUser" element={<AuthForm />} />
           <Route exact path="/signUp" element={<SignUp />} />
+          <Route exact path="/edit" element={<Modification />} />
+          <Route path="/useapi" element={<UseApi/>} />
+
         </Routes>
       </div>
     </Router>
