@@ -8,6 +8,15 @@ import AuthForm from './pages/AuthForm';
 import SignUp from './pages/SignUp';
 import Modification from './pages/Modification';
 import UseApi from './pages/UseApi';
+import Stack from './pages/Stack';
+
+const UseApiWithStack = () => {
+  return (
+      <UseApi>
+          <Stack />
+      </UseApi>
+  );
+};
 
 function App() {
     return (
@@ -21,7 +30,8 @@ function App() {
           <Route exact path="/createUser" element={<AuthForm />} />
           <Route exact path="/signUp" element={<SignUp />} />
           <Route exact path="/edit" element={<Modification />} />
-          <Route path="/useapi" element={<UseApi/>} />
+          <Route path="/useapi" element={<UseApiWithStack/>} />
+
 
         </Routes>
       </div>
