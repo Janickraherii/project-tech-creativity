@@ -1,39 +1,41 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { fabric } from 'fabric';
-import { ImageContext } from './UseApi'; // Assurez-vous que le chemin d'importation est correct
+import { useLocation } from 'react-router-dom';
 
 const Stack = () => {
-    const selectedImage = useContext(ImageContext);
-
-    const [memes, setMemes] = useState([]);
     const [text1, setText1] = useState('');
     const [text2, setText2] = useState('');
     const canvasRef = useRef();
     const text1Ref = useRef();
     const text2Ref = useRef();
+    const location = useLocation();
 
-
-    useEffect(() => {
-        // Récupération des mèmes
-        fetch('https://api.imgflip.com/get_memes')
-            .then(response => response.json())
-            .then(data => setMemes(data.data.memes))
-            .catch(error => console.error(error));
-    }, []);
+    const selectedImageURL = location.state ? location.state.imageURL : null;
 
     useEffect(() => {
-        if (memes.length > 0) {
-            const canvas = new fabric.Canvas(canvasRef.current);
-            fabric.Image.fromURL(selectedImage.url, function(img) { // Utiliser l'image sélectionnée ici
-                img.scaleToWidth(500);
-                canvas.add(img);
-                text1Ref.current = new fabric.Text(text1, { left: 10, top: 10 });
-                text2Ref.current = new fabric.Text(text2, { left: 10, top: 50 });
-                canvas.add(text1Ref.current);
-                canvas.add(text2Ref.current);
-            });
+        console.log("URL arrivée sur Stack:", selectedImageURL);
+        if (selectedImageURL) {
+            fetch(selectedImageURL)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const canvas = new fabric.Canvas(canvasRef.current);
+                    fabric.Image.fromURL(url, function(img) {
+                        if (img) {
+                            img.scaleToWidth(500);
+                            canvas.add(img);
+                            text1Ref.current = new fabric.Text(text1, { left: 10, top: 10 });
+                            text2Ref.current = new fabric.Text(text2, { left: 10, top: 50 });
+                            canvas.add(text1Ref.current);
+                            canvas.add(text2Ref.current);
+                        } else {
+                            console.error('Failed to load image from URL: ' + url);
+                        }
+                    }, {crossOrigin: 'use-credentials'});
+                })
+                .catch(error => console.error('Error:', error));
         }
-    }, [memes, text1, text2, selectedImage]); // Ajouter selectedImage comme dépendance
+    }, [selectedImageURL, text1, text2]);
 
     const handleTextChange = (event, setText, textRef) => {
         setText(event.target.value);

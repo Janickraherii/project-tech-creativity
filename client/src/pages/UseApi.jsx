@@ -1,50 +1,46 @@
-import { Link } from 'react-router-dom';
-import React, { useState, createContext, useEffect } from 'react';
+// Utilisez ce code dans UseApi
 
-// 1. Créer un contexte
-export const ImageContext = createContext();
+import React, { useState, useEffect, createContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+export const SelectedImageContext = createContext();
 
 const UseApi = () => {
-    const [images, setImages] = useState([]);
-    // 2. Utiliser le contexte pour stocker l'image sélectionnée
     const [selectedImage, setSelectedImage] = useState(null);
+    const [images, setImages] = useState([]);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         fetch('https://api.imgflip.com/get_memes')
             .then(response => response.json())
             .then(data => {
-                if (data && data.data && data.data.memes) {
-                    const newImages = data.data.memes
-                        .map(meme => ({ url: meme.url, title: meme.name }))
-                        .filter(image => image.url.match(/\.(jpeg|jpg|png)$/));
-                    setImages(newImages);
-                }
-            });
+                setImages(data.data.memes);
+            })
+            .catch(error => console.error('Error:', error));
     }, []);
 
-    const handleImageClick = (image) => {
-        setSelectedImage(image);
+    const handleImageSelect = (url) => {
+        setSelectedImage(url);
+        navigate('/stack', { state: { imageURL: url } }); // Pass imageURL as state
     };
 
     return (
-        <ImageContext.Provider value={selectedImage}>
+        <SelectedImageContext.Provider value={selectedImage}>
             <div className="flex flex-wrap ">
-                {images.map((image, index) => (
-                    <div key={index} className="w-1/6 m-6 border rounded-lg border-[#2BCCC0]">
-                        <Link to={{
-                            pathname: '/stack',
-                            state: { image: image }
-                        }}>
-                            <img src={image.url} alt={image.title} className="w-full h-52 object-cover rounded-lg" onClick={() => handleImageClick(image)} />
-                        </Link>
+                {images.map((image) => (
+                    <div className="w-1/6 m-6 border rounded-lg border-[#2BCCC0]" key={image.id}>
+                        <img
+                            className="w-full h-52 object-cover rounded-lg"
+                            src={image.url}
+                            alt={image.name}
+                            onClick={() => handleImageSelect(image.url)}
+                        />
+                        <p className='text-[#2BCCC0]'>{image.name}</p>
                     </div>
                 ))}
             </div>
-        </ImageContext.Provider>
+        </SelectedImageContext.Provider>
     );
 };
 
 export default UseApi;
-
-// Dans le composant "stack", vous pouvez utiliser le contexte pour récupérer l'image sélectionnée.
-// const selectedImage = useContext(ImageContext);
