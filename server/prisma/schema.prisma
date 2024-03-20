@@ -13,18 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modèle pour les utilisateurs
-// model User {
-//   id                   Int                  @id @default(autoincrement())
-//   username             String               @unique
-//   email                String               @unique
-//   passwordHash         String // (remplacez par un hash sécurisé)
-//   profileImage         String // Chemin de l'image de profil
-//   coverImage           String // Chemin de l'image de couverture
-//   posts                Post[] // Les publications de l'utilisateur
-//   likes                Like[] // Les likes de l'utilisateur
-//   publicationHistories PublicationHistory[] // Ajout du champ de relation opposé
-// }
+
 
 model User {
   id            Int                 @id @default(autoincrement())
@@ -32,36 +21,19 @@ model User {
   lastname      String
   email         String              @unique
   password      String
-  data          Bytes[]              // Assurez-vous de sécuriser le mot de passe, par exemple en utilisant un hash sécurisé
+  data          Bytes[]    
+  profileImage  String?             // Chemin de l'image de profil
+  coverImage    String?             // Chemin de l'image de couverture
+  votes         Int                 @default(0) // Nombre de votes obtenus par l'utilisateur
+  posts         Post[]              // Les publications de l'utilisateur          
+}
+
+model Post {
+  id            Int                 @id @default(autoincrement())
+  user          User                @relation(fields: [userId], references: [id])
+  userId        Int
+  imageUrl      String              // Chemin de l'image publiée
+  votes         Int                 @default(0) // Nombre de votes obtenus par la publication
 }
 
 
-// Modèle pour les publications
-// model Post {
-//   id                   Int                  @id @default(autoincrement())
-//   user                 User                 @relation(fields: [userId], references: [id])
-//   userId               Int
-//   imageUrl             String // Chemin de l'image publiée
-//   caption              String? // Légende de la publication
-//   createdAt            DateTime             @default(now())
-//   likes                Like[] // Les likes de la publication
-//   publicationHistories PublicationHistory[] // Ajout du champ de relation opposé
-// }
-
-// // Modèle pour les likes
-// model Like {
-//   id     Int  @id @default(autoincrement())
-//   user   User @relation(fields: [userId], references: [id])
-//   userId Int
-//   post   Post @relation(fields: [postId], references: [id])
-//   postId Int
-// }
-
-// model PublicationHistory {
-//   id        Int      @id @default(autoincrement())
-//   user      User     @relation(fields: [userId], references: [id])
-//   userId    Int
-//   post      Post     @relation(fields: [postId], references: [id])
-//   postId    Int
-//   createdAt DateTime @default(now())
-// }
