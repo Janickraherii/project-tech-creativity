@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import Modification from './pages/Modification';
 import UseApi from './pages/UseApi';
 import Stack from './pages/Stack';
+import ContactUsForm from './pages/ContactForm';
 
 function App() {
     return (
@@ -19,9 +20,10 @@ function App() {
           {/* <Route exact path="/actualites" element={<Actuality />} /> */}
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/dropzone" element={<Dropzone />} />
-          <Route exact path="/createUser" element={<AuthForm />} />
+          <Route exact path="/authentification" element={<AuthForm />} />
           <Route exact path="/signUp" element={<SignUp />} />
           <Route exact path="/edit" element={<Modification />} />
+          <Route exact path="/contactus" element={<ContactUsForm />} />
           <Route path="/useapi" element={<UseApi/>} />
           <Route path="/stack" element={<Stack />} /> 
 

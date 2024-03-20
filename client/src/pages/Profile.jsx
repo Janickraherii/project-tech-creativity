@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect} from 'react'; // Assurez-vous que useRef est importé correctement
+import React, { useState, useRef, useEffect} from 'react'; 
+import { Link } from 'react-router-dom';
 import icon1 from '../assets/majesticons_folder-line.svg';
 import icon2 from '../assets/majesticons_settings-cog-line.png';
 import icon3 from '../assets/quill_paper.svg';
@@ -79,8 +80,9 @@ function Profile() {
   </div>
   <div className="flex items-center justify-center w-1/4 h-52 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
     <img src={icon4} alt="icon4" className="w-14" />
-    <p className="text-[#2BCCC0] p-2 text-center"> Nous-contactez </p>
-  </div>
+    <p className="text-[#2BCCC0] p-2 text-center">
+        <Link to="/contactus">Nous-contactez</Link>
+</p>  </div>
 </div>
 
 
