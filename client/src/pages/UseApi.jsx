@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export const SelectedImageContext = createContext();
 
@@ -25,8 +27,10 @@ const UseApi = () => {
     };
 
     return (
+        <>
+        <Header />
         <SelectedImageContext.Provider value={selectedImage}>
-            <div className="flex flex-wrap ">
+            <div className="flex flex-wrap bg-black">
                 {images.map((image) => (
                     <div className="w-1/6 m-6 border rounded-lg border-[#2BCCC0]" key={image.id}>
                         <img
@@ -40,6 +44,9 @@ const UseApi = () => {
                 ))}
             </div>
         </SelectedImageContext.Provider>
+        <Footer/>
+        </>
+        
     );
 };
 
