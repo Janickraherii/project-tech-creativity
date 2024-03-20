@@ -6,6 +6,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Draggable from 'react-draggable';
 import html2canvas from 'html2canvas';
+import down from '../assets/down.png';
+import share from '../assets/share.png';
+import backgroundImage from '../assets/Background.png'; 
+
+
+
+
 
 const downloadMeme = () => {
     const memeElement = document.querySelector('.relative'); // Select the parent div of the meme
@@ -23,9 +30,9 @@ const downloadMeme = () => {
 const MemeGenerator = () => {
     const [topText, setTopText] = useState('');
     const [bottomText, setBottomText] = useState('');
-    const [fontSize, setFontSize] = useState('2xl'); 
+    const [fontSize, setFontSize] = useState('null'); 
     const [showPopup, setShowPopup] = useState(false); // Initial state is false (popup not shown)
-    const [textColor, setTextColor] = useState("#000000");
+    const [textColor, setTextColor] = useState("#7be3db");
     const [imageUrl, setImageUrl] = useState(null);
     const location = useLocation();
     const selectedImageURL = location.state ? location.state.imageURL : null;
@@ -41,95 +48,178 @@ const MemeGenerator = () => {
                 });
         }
     }, [selectedImageURL]);
+
+    async function uploadImage() {
+        try {
+            const base64Image = await getBase64ImageFromUrl(imageUrl);
+            const response = await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: base64Image }),
+            });
+            if (response.ok) {
+                console.log('Image uploaded successfully');
+            } else {
+                console.error('Failed to upload image:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    }
+    
+    async function getBase64ImageFromUrl(url) {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.replace(/^data:image\/(png|jpg);base64,/, ""));
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
+    
    
 
     return (
-        <>
-        <Header />
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'contain', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: '100vh' }}>
+                 <Header />
          
 
-<div className="flex flex-col items-center justify-center">
-           
-            <div className="relative " >
-               <Draggable>
-                            <p style={{ color: textColor }} className={`absolute top-0 left-0 p-2 text-${fontSize}`}>{topText}</p>
+         <div className="flex flex-col items-center justify-center">
+                    
+                     <div className="relative " >
+                        <Draggable>
+                                     <p style={{ color: textColor, backgroundColor: '#FFFFFF' }} className={`absolute top-0 left-0 p-2 text-${fontSize}`}>{topText}</p>
+         
+                        </Draggable>
+                        <div className="w-[500px] mx-auto bg-blue-500">
+                        <div className="flex justify-center items-center 100vh mt-28">
+                             <div className="w-full  rounded-2xl">
+                                     {imageUrl && <img src={imageUrl} alt="meme" className="object-cover h-auto rounded-2xl border border-[#2BCCC0]" />}
+                                 </div>
+                             </div>
+                        
+                        </div>
+         
+                             
+                         
+                         <Draggable>
+                         <p style={{ color: textColor, backgroundColor: '#FFFFFF'  }} className={`absolute bottom-0 left-0 p-2 text-${fontSize}`}>{bottomText}</p>
+                         </Draggable>
+                         
+                         
+                     </div>
+         </div>
+         <div>
+             <div className="flex justify-center fixed bottom-20 left-0 right-0 ">
+                     <div className='border border-[#2BCCC0] flex flex-row space-x-4 p-2 rounded-full'>
+                         <div
+                             onClick={() => setShowPopup(true)}
+                             className="cursor-pointer w-10 h-10 rounded-full bg-[#515CDA] flex items-center justify-center"                >
+                             <img
+                                 src={buttonImage} 
+                                 alt="Afficher"
+                             /> 
+                         </div>
+                         <div >
+                                 <select
+                                     value={fontSize}
+                                     onChange={e => setFontSize(e.target.value)}
+                                     style={{
+                                         backgroundImage: `url(${selectImage})`,
+                                         backgroundSize: '32x 32px',
+                                         backgroundRepeat: 'no-repeat',
+                                         backgroundPosition: 'center', 
+                                         backgroundColor: '#515CDA',
+                                         width: '40px',
+                                         height: '40px',
+                                         border: 'none',
+                                         textIndent: '-9999px',
+                                         borderRadius: '50%'
+         
+         
+         
+                                     }}
+                                 >
+                                     <option value="md">Petit</option>
+                                     <option value="lg">Moyen</option>
+                                     <option value="2xl">Grand</option>
+                                     <option value="3xl">Très grand</option>
+                                 </select>
+                                 </div>
+         
+                                 <input 
+                                 type="color" 
+                                 value={textColor} 
+                                 onChange={(event) => setTextColor(event.target.value)} 
+                                 className="w-10 h-10 rounded-full flex items-center justify-center"
+                             />
+         
+                          
+         
+         
+                     </div>
+                     <div className='ml-96 flex flex-row space-x-11 border border-[#2BCCC0] rounded-full h-14 '>
+                          <div className='px-4 m-auto  '>
+                             <button 
+                                 onClick={downloadMeme} 
+                                 style={{ 
+                                     backgroundImage: `url(${down})`, 
+                                     backgroundSize: 'cover', 
+                                     width: '24px', 
+                                     height: '24px'
+                                 }}
+                             >
+                             </button> 
+                                 </div>   
+                     <div className='px-4 m-auto '>
+                         <button onClick={uploadImage}
+                             style={{ 
+                                 backgroundImage: `url(${share})`, 
+                                 backgroundSize: 'cover', 
+                                 width: '24px', 
+                                 height: '24px'
+                             }}
+                         >
+                         </button> 
+                     </div>
+         </div>   
+         
+         
+         </div>
+         </div>
+                 
+         {showPopup && (
+             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 ">
+                 <div className="bg-[#134743] p-4 rounded space-x-5">
+                     <input
+                         type="text"
+                         placeholder="Texte du haut"
+                         value={topText}
+                         onChange={e => setTopText(e.target.value)}
+                         className="p-2 border border-gray-300 rounded mb-4"
+                     />
+                     <input
+                         type="text"
+                         placeholder="Texte du bas"
+                         value={bottomText}
+                         onChange={e => setBottomText(e.target.value)}
+                         className="p-2 border border-gray-300 rounded mb-4"
+                     />
+         
+                 <button onClick={() => setShowPopup(false)}> Entrer</button>
+         
+         
+               </div>
+             </div>
+         )}
+         <Footer />
 
-               </Draggable>
-                <div className="w-fit max-w-[400px] max-h-[300px] rounded-2xl mt-20"> {/* New class for the image */}
-                    {imageUrl && <img src={imageUrl} alt="meme" className="w-full rounded-2xl border border-[#2BCCC0]" />}
-                </div>
-                <Draggable>
-                <p style={{ color: textColor }} className={`absolute bottom-0 left-0 p-2 text-${fontSize}`}>{bottomText}</p>
-</Draggable>
-                
-                
         </div>
-        </div>
-        <div className="flex justify-center fixed bottom-20 left-0 right-0">
-        <select
-    value={fontSize}
-    onChange={e => setFontSize(e.target.value)}
-    className="p-2 border border-red-400 rounded mb-4"
-    style={{
-        backgroundImage: `url(${selectImage})`,
-        backgroundSize: 'cover',
-        appearance: 'none',
-        width: '32px',
-        height: '32px'
-    }}
->
-    <option value="xs">XS</option>
-    <option value="sm">SM</option>
-    <option value="md">MD</option>
-    <option value="lg">LG</option>
-    <option value="xl">XL</option>
-    <option value="2xl">2XL</option>
-    <option value="3xl">3XL</option>
-    <option value="4xl" >4XL</option>
-</select>
-<img
-    src={buttonImage} 
-    alt="Afficher"
-    onClick={() => setShowPopup(true)}
-    className="cursor-pointer w-8 h-8"
-/> 
-<input
-    type="color"
-    value={textColor}
-    onChange={e => setTextColor(e.target.value)}
-    className="p-2 border border-gray-300 rounded mb-4"
-/>
- 
-<button onClick={downloadMeme} className='text-white'>Télécharger le meme</button>
+       
 
-</div>
-{showPopup && (
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-4 rounded">
-            <input
-                type="text"
-                placeholder="Texte du haut"
-                value={topText}
-                onChange={e => setTopText(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-4"
-            />
-            <input
-                type="text"
-                placeholder="Texte du bas"
-                value={bottomText}
-                onChange={e => setBottomText(e.target.value)}
-                className="p-2 border border-gray-300 rounded mb-4"
-            />
-
-        <button onClick={() => setShowPopup(false)}>Fermer</button>
-
-
-      </div>
-    </div>
-)}
-<Footer />
-
-        </>
         
     );
 };
