@@ -1,11 +1,13 @@
-// import React, { useState, useEffect } from 'react';
+// import React, { useState } from 'react';
 // import { useDropzone } from 'react-dropzone';
 // import Header from '../components/Header';
 // import Footer from '../components/Footer';
 // import { fabric } from 'fabric';
+// import { Link } from 'react-router-dom';
+
 
 // function Dropzone() {
-//   const [selectedImage, setSelectedImage] = useState(null);
+// //   const [selectedImage, setSelectedImage] = useState(null);
 //   const { getRootProps, getInputProps, isDragActive } = useDropzone({
 //     accept: 'image/*',
 //     onDrop: (acceptedFiles) => {
@@ -49,8 +51,10 @@
 //             )}
 //           </div>
 //           <div className='flex justify-center'>
-//             <button className='bg-[#515CDA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white' onClick={drawImageOnCanvas}>Choisir un template</button>
-//           </div>
+//                 <button className='bg-[#515CDA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white' onClick={drawImageOnCanvas}>
+//                      <Link to="/useapi">Choisir un template</Link>
+//                 </button>          
+// </div>
 //         </div>
 //       </div>
 //       {/* Canvas Fabric */}
