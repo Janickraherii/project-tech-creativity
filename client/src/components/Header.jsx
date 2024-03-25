@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 
@@ -6,10 +6,24 @@ import { Link } from 'react-router-dom';
 
 
 function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrolled = window.scrollY > 50;
+      setIsScrolled(scrolled);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
   return (
-    <header className='border border-[#2BCCC0] rounded-b-3xl  h-20 flex flex-row sticky top-0 backdrop-blur-md bg-gradient-to-b from-transparent to-[rgba(43,204,192,0.5)]'style={{ zIndex: '2' }}>
+    <header className={`border border-[#2BCCC0] rounded-b-3xl h-20 flex flex-row sticky top-0 backdrop-blur-md ${isScrolled ? 'bg-gradient-to-b from-transparent to-[rgba(43,204,192,0.5)]' : ''}`} style={{ zIndex: '2' }}>
       <div className='flex justify-between'>
-        <img src={logo} alt="Logo de mon application" className='h-16 ml-48 m-2' /> 
+      <Link to="/">
+  <img src={logo} alt="Logo de mon application" className='h-16 ml-48 m-2' />
+</Link>        
       </div>          
       <div className=' flex justify-end space-x-4 w-full mr-6'>
         <Link to="/signup">

@@ -46,7 +46,7 @@ function Profile() {
             <div className='flex justify-center items-center flex-col relative mt-10'>
                 <button onClick={handleBrowseClick} className="z-10">Parcourir...</button>
                 <input ref={fileInputRef} type="file" onChange={handleImageUpload} style={{ display: 'none' }} accept="image/*" />
-                <div className='relative w-5/6 h-[500px] rounded-3xl flex flex-row -mt-11'
+                <div className='relative w-5/6 sm:h-[200px] xl:h-[500px] rounded-3xl flex flex-row -mt-40'
                      style={{ backgroundImage: `url(${coverImageUrl || pdp})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                             <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                             <div className="h-32 w-32 rounded-full overflow-hidden border border-[#2BCCC0] border-gradient" style={{ zIndex: '1' }}>

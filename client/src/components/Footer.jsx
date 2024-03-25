@@ -14,8 +14,10 @@ function Footer() {
                 <img src={home} alt="Logo de mon application" className=' w-6 ml-6 m-4' />
               </Link>          
 <img src={explorer} alt="Logo de mon application" className='  w-6 ml-6 m-4' /> 
-          <img src={plus} alt="Logo de mon application" className=' w-12 h-12 ml-6 m-4 -mt-6  z-50' /> 
-          <img src={heart} alt="Logo de mon application" className=' w-6 ml-6 m-4 ' /> 
+              <Link to="/start">
+                  <img src={plus} alt="Logo de mon application" className=' w-12 h-12 ml-6 m-4 -mt-6  z-50' />
+              </Link>         
+ <img src={heart} alt="Logo de mon application" className=' w-6 ml-6 m-4 ' /> 
               <Link to="/profile">
                 <img src={user} alt="Logo user" className=' w-6  ml-6 m-4' />
              </Link>         

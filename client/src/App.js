@@ -10,6 +10,7 @@ import Modification from './pages/Modification';
 import UseApi from './pages/UseApi';
 import Stack from './pages/Stack';
 import ContactUsForm from './pages/ContactForm';
+import Start from './pages/Start';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/contactus" element={<ContactUsForm />} />
           <Route path="/useapi" element={<UseApi/>} />
           <Route path="/stack" element={<Stack />} /> 
+          <Route path="/start" element={<Start />} />
 
 
 

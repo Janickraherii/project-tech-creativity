@@ -94,7 +94,7 @@ const MemeGenerator = () => {
                                      <p style={{ color: textColor, backgroundColor: '#FFFFFF' }} className={`absolute top-0 left-0 p-2 text-${fontSize}`}>{topText}</p>
          
                         </Draggable>
-                        <div className="w-[500px] mx-auto bg-blue-500">
+                        <div className="w-[500px] mx-auto bg-[#2a2a2a] border border-[#2BCCC0] rounded-full ">
                         <div className="flex justify-center items-center 100vh mt-28">
                              <div className="w-full  rounded-2xl">
                                      {imageUrl && <img src={imageUrl} alt="meme" className="object-cover h-auto rounded-2xl border border-[#2BCCC0]" />}

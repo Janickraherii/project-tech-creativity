@@ -1,4 +1,5 @@
-import React, {  useEffect } from 'react';
+import React, {  useEffect, useState } from 'react';
+import { Transition } from '@headlessui/react';
 import image1 from '../assets/accueil_1.svg';
 import image2 from '../assets/Rectangle_1.svg';
 import image3 from '../assets/Rectangle_2.svg';
@@ -15,8 +16,25 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 
 function Home() {
+    const [scrolled, setScrolled] = useState(false);
     useEffect(() => {
-        AOS.init(); // Initialisez AOS
+        const handleScroll = () => {
+          const isTop = window.scrollY < 100;
+          if (isTop !== true) {
+            setScrolled(true);
+          } else {
+            setScrolled(false);
+          }
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+
+    useEffect(() => {
+        AOS.init(); 
     }, []);
   return (
     <div style={{backgroundColor: 'black'}}>
@@ -27,8 +45,18 @@ function Home() {
         </div> 
         <div className='w-1/3'>
             <div className='w-96 flex flex-col items-center py-40' data-aos="fade-left">
-                <p className='text-[#2BCCC0] text-3xl font-bold'> Plongez dans le monde du rire en créant des mèmes uniques !</p>
-                <p className='text-[#2BCCC0] text-xl'> En fusionnant texte et images pour des créations amusantes.</p>
+                            <Transition
+                                show={scrolled}
+                                enter="transition ease-in-out duration-700"
+                                enterFrom="bg-[#DA51A0]"
+                                leave="transition ease-in-out duration-700"
+                                leaveTo="bg-[#DA51A0]"
+                                >
+                                <p className={`text-3xl font-bold ${scrolled ? "bg-[#2BCCC0]" : ""}`}>
+                                Plongez dans le monde du rire en créant des mèmes uniques !
+                                </p>
+                </Transition>              
+<p className='text-[#2BCCC0] text-2xl font-bold'> Fusionnez texte et images pour des créations amusantes.</p>
 
             </div>
         </div> 
