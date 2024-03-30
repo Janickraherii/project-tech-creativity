@@ -38,8 +38,14 @@ function Dropzone() {
             )}
           </div>
           <div className='flex justify-center'>
-            {!selectedImage ? (
-              <button className='bg-[#515CDA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white' disabled>Choisir un template</button>
+          {!selectedImage ? (
+  <Link 
+    to="/useapi" 
+    className='bg-[#515CDA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white text-center' 
+    disabled
+  >
+    Choisir un template
+  </Link>
             ) : (
               <Link to={{ pathname: "/stack", state: { selectedImage: selectedImage }}}>
                 <button className='bg-[#CF51DA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white'>Continuer...</button>

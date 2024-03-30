@@ -91,9 +91,13 @@ const MemeGenerator = () => {
                     
                      <div className="relative " >
                         <Draggable>
-                                     <p style={{ color: textColor, backgroundColor: '#FFFFFF' }} className={`absolute top-0 left-0 p-2 text-${fontSize}`}>{topText}</p>
+                                     <p style={{ color: textColor, backgroundColor: '#FFFFFF' }} className={`absolute top-0 left-0 p-2 text-${fontSize}`}>    {topText || 'Déplacez ce carré'}
+</p>
          
                         </Draggable>
+                        <Draggable>
+                         <p style={{ color: textColor, backgroundColor: '#FFFFFF'  }} className={`absolute bottom-12 left-0 p-2 text-${fontSize}`}>{bottomText || 'Déplacez ce carré'}</p>
+                         </Draggable>
                         <div className="w-[500px] mx-auto max-h-screen overflow-auto">
                             <div className="flex justify-center items-center 100vh mt-15">
                             <div className="flex items-center justify-center min-h-screen">
@@ -104,9 +108,7 @@ const MemeGenerator = () => {
          
                              
                          
-                         <Draggable>
-                         <p style={{ color: textColor, backgroundColor: '#FFFFFF'  }} className={`absolute bottom-0 left-0 p-2 text-${fontSize}`}>{bottomText}</p>
-                         </Draggable>
+                         
                          
                          
                      </div>
