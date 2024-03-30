@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import buttonImage from '../assets/formkit_text.png';
 import selectImage from '../assets/select_image.png';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Draggable from 'react-draggable';
 import html2canvas from 'html2canvas';
@@ -17,13 +16,13 @@ import backgroundImage from '../assets/Background.png';
 const downloadMeme = () => {
     const memeElement = document.querySelector('.relative'); // Select the parent div of the meme
   
-    html2canvas(memeElement).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'meme.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-  };
+html2canvas(memeElement, { scale: 1 }).then(canvas => {
+  const link = document.createElement('a');
+  link.download = 'meme.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+};
 
 
 
@@ -36,6 +35,8 @@ const MemeGenerator = () => {
     const [imageUrl, setImageUrl] = useState(null);
     const location = useLocation();
     const selectedImageURL = location.state ? location.state.imageURL : null;
+    const [isImageInserted, setIsImageInserted] = useState(false); // Faire disparaître le header
+
     
 
     useEffect(() => {
@@ -83,9 +84,8 @@ const MemeGenerator = () => {
    
 
     return (
-        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'contain', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: '100vh' }}>
-                 <Header />
-         
+        
+        <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'contain', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: '100vh' }}>         
 
          <div className="flex flex-col items-center justify-center">
                     
@@ -94,13 +94,12 @@ const MemeGenerator = () => {
                                      <p style={{ color: textColor, backgroundColor: '#FFFFFF' }} className={`absolute top-0 left-0 p-2 text-${fontSize}`}>{topText}</p>
          
                         </Draggable>
-                        <div className="w-[500px] mx-auto bg-blue-500">
-                        <div className="flex justify-center items-center 100vh mt-28">
-                             <div className="w-full  rounded-2xl">
-                                     {imageUrl && <img src={imageUrl} alt="meme" className="object-cover h-auto rounded-2xl border border-[#2BCCC0]" />}
-                                 </div>
-                             </div>
-                        
+                        <div className="w-[500px] mx-auto max-h-screen overflow-auto">
+                            <div className="flex justify-center items-center 100vh mt-15">
+                            <div className="flex items-center justify-center min-h-screen">
+                            {imageUrl && <img src={imageUrl} alt="meme" className="object-cover max-w-full max-h-screen border border-[#2BCCC0]" />}
+                                </div>
+                            </div>
                         </div>
          
                              

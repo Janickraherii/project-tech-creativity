@@ -21,7 +21,11 @@ const handleSubmit = (e) => {
     <div className='flex flex-row space-x-6 w-full h-screen items-center'>
          <div className='flex flex-col w-1/2 mt-20'>
             <img src={logo} alt="image1" className='w-44 ml-80 m-6' /> 
-            <p className='text-[#2BCCC0] ml-80 text-lg font-bold'>Libérez l'humour numérique sans limites !</p>
+            <div className=' w-[80%] ml-10'>
+              <p className='text-[#111111] ml-40 text-lg font-bold bg-[#2BCCC0] text-center'>Libérez l'humour numérique sans limites !</p>
+            <p className='text-[#111111] ml-40 text-lg font-bold bg-[#2BCCC0] text-center'>Des idées d'améliorations? Nous sommes à l'écoute</p>
+            </div>
+            
             <img src={deco} alt="image1" className=' w-96 ml-0 m-6 mb-0' /> 
          </div>
 

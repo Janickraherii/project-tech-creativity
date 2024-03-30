@@ -4,6 +4,12 @@ import facebook from '../assets/logo-facebook.png';
 import gmail from '../assets/logo-gmail.svg';
 import line from '../assets/line.svg';
 import backgroundImg from '../assets/papier.jpg';
+import { GoogleLogin } from 'react-google-login';
+
+const responseGoogle = (response) => {
+  console.log(response);
+  // Vous pouvez utiliser la réponse pour vous connecter à votre API
+}
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -103,6 +109,12 @@ function SignUp() {
         <div className='flex flex-row h-12 space-x-12 justify-center'>
             <button className="flex flex-row justify-center items-center bg-[#7BE3DB] bg-opacity-70 backdrop-blur-lg rounded-3xl text-xs px-6 ">
             Se connecter avec <img src={gmail} className="ml-3" alt="Logo Gmail" />
+            <GoogleLogin
+              clientId="votre_client_id"
+              buttonText="Se connecter avec Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+            />
           </button>
           <button className="flex flex-row justify-center items-center bg-[#7BE3DB] bg-opacity-70 backdrop-blur-lg rounded-3xl text-xs  px-6">
             Se connecter avec <img src={facebook} className="ml-3" alt="Logo Facebook" />
