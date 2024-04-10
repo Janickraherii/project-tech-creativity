@@ -1,22 +1,32 @@
-import React from 'react';
-// import image1 from '../assets/accueil_1.svg';
-// import image2 from '../assets/Rectangle_1.svg';
-// import image3 from '../assets/Rectangle_2.svg';
-// import image4 from '../assets/Rectangle_3.svg';
-// import image5 from '../assets/Rectangle_4.svg';
-// import image6 from '../assets/Rectangle_5.svg';
-// import image7 from '../assets/Rectangle_6.svg';
-// import image8 from '../assets/Rectangle_7.svg';
-// import image9 from '../assets/Rectangle_8.svg';
-// import deco from '../assets/Component_6.svg'; 
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import pdp from '../assets/pdp.png';
 import image from '../assets/chien.png';
+import background from '../assets/Background1.png'; // Importez votre image d'arrière-plan ici
+
 function Actuality() {
+  const [votes, setVotes] = useState(0); // Ajoutez cet état pour suivre le nombre de votes
+  const handleVote = async () => {
+    setVotes(votes + 1); // Cette fonction est appelée lorsque le bouton est cliqué
+  
+    // Envoi du nombre de votes à la base de données
+    const response = await fetch(`http://localhost:4000/api/users/`, { // Remplacez userId par l'identifiant de l'utilisateur
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ votes: votes + 1 }),
+    });
+  
+    if (!response.ok) {
+      console.error('Failed to update votes:', response.statusText);
+    }
+  };
   return (
     <>
-    <Header/>
+    <div style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover' }}>
+      <Header/>
     <div className="flex justify-center items-center h-screen flex-col">
         <div className='flex flex-row'>
             <div className='flex justify-start '>
@@ -50,6 +60,9 @@ function Actuality() {
   <div className="absolute inset-x-0 bottom-0 flex  justify-center">
     <div className="w-full h-16 bg-black bg-opacity-25 rounded-lg backdrop-blur-sm shadow-lg"></div>
   </div>
+  <button onClick={handleVote}   className="absolute bottom-4 left-4 z-10 bg-pink-500 text-white px-4 py-2 rounded"
+>Vote</button>
+      <p className='text-white'>Nombre de votes : {votes}</p>
 </div>
 
 
@@ -58,6 +71,8 @@ function Actuality() {
     
 
     <Footer/>
+    </div>
+    
     </> 
   
   );

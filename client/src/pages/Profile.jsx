@@ -46,8 +46,8 @@ function Profile() {
             <div className='flex justify-center items-center flex-col relative mt-10'>
                 <button onClick={handleBrowseClick} className="z-10">Parcourir...</button>
                 <input ref={fileInputRef} type="file" onChange={handleImageUpload} style={{ display: 'none' }} accept="image/*" />
-                <div className='relative w-5/6 h-[500px] rounded-3xl flex flex-row -mt-11'
-                     style={{ backgroundImage: `url(${coverImageUrl || pdp})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                <div className='absolute top-0 w-5/6 h-[50vh] rounded-3xl flex flex-row mt-[-20px]'                     
+                style={{ backgroundImage: `url(${coverImageUrl || pdp})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                             <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                             <div className="h-32 w-32 rounded-full overflow-hidden border border-[#2BCCC0] border-gradient" style={{ zIndex: '1' }}>
                                 <img src={pdp} alt="Photo de profil" className="w-full h-full object-cover"  style={{ zIndex: '1' }} />
@@ -65,24 +65,23 @@ function Profile() {
                     
                 </div>
             </div>
-    <div className="absolute bottom-20 space-x-10 w-full flex justify-between left-2 right-2 mx-auto max-w-screen-lg mt-10">
-  <div className="flex items-center justify-center w-1/4 h-52 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
+            <div className="absolute bottom-20 space-x-10 w-full flex justify-between left-2 right-2 mx-auto max-w-screen-lg mt-10">
+  <div className="flex items-center justify-center w-1/5 h-40 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
     <img src={icon1} alt="icon1" className="w-14" />
     <p className="text-[#2BCCC0] p-2 text-center"> Historique </p>
   </div>
-  <div className="flex items-center justify-center w-1/4 h-52 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
-    <img src={icon2} alt="icon2" className="w-14" />
-    <p className="text-[#2BCCC0] p-2 text-center"> Paramètres de confidentialité </p>
-  </div>
-  <div className="flex items-center justify-center w-1/4 h-52 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
+  
+  <div className="flex items-center justify-center w-1/5 h-40 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
     <img src={icon3} alt="icon3" className="w-14" />
-    <p className="text-[#2BCCC0] p-4 py-2 text-center"> Politique de confidentialité </p>
+    <p className="text-[#2BCCC0] p-4 py-2 text-center"> 
+    <Link to="/privacy">Politique de confidentialité </Link> </p>
   </div>
-  <div className="flex items-center justify-center w-1/4 h-52 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
+  <div className="flex items-center justify-center w-1/5 h-40 bg-[#2A2A2A] rounded-lg border border-[#2BCCC0] flex-col font-bold">
     <img src={icon4} alt="icon4" className="w-14" />
     <p className="text-[#2BCCC0] p-2 text-center">
         <Link to="/contactus">Nous-contactez</Link>
-</p>  </div>
+    </p>
+  </div>
 </div>
 
 

@@ -12,6 +12,7 @@ import Stack from './pages/Stack';
 import ContactUsForm from './pages/ContactForm';
 import Actuality from './pages/Actuality';
 import Login from './pages/Login';
+import PolitiqueConfidentialite from './pages/PrivacyPolicy';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/stack" element={<Stack />} /> 
           <Route path="/actualites" element={<Actuality />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/privacy" element={<PolitiqueConfidentialite />} />
 
 
 

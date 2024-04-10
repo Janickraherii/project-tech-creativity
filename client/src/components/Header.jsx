@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom'; 
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 
@@ -6,8 +7,11 @@ import { Link } from 'react-router-dom';
 
 
 function Header() {
+  const location = useLocation();
+const isProfilePage = location.pathname === '/profile';
+const backgroundColor = isProfilePage ? 'transparent' : 'bg-gradient-to-b from-transparent to-[rgba(43,204,192,0.5)]';
   return (
-    <header className='border border-[#2BCCC0] rounded-b-3xl  h-20 flex flex-row sticky top-0 backdrop-blur-md bg-gradient-to-b from-transparent to-[rgba(43,204,192,0.5)]'style={{ zIndex: '2' }}>
+    <header className={`border border-[#2BCCC0] rounded-b-3xl h-20 flex flex-row sticky top-0 backdrop-blur-md ${backgroundColor}`} style={{ zIndex: '2' }}>
       <div className='flex justify-between'>
         <img src={logo} alt="Logo de mon application" className='h-16 ml-48 m-2' /> 
       </div>          
