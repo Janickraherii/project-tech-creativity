@@ -25,7 +25,7 @@ function AuthForm() {
             <p className='text-xs text-[#7BE3DB] mb-6'>Libérez l'humour numérique sans limites !</p> 
             <div className='flex flex-col space-y-4'>
               <button className='bg-[#DA51A0] rounded-3xl text-white text-xs py-3'>
-                <Link to="/signUp"> Se connecter </Link> {/* Utilisez Link pour la navigation */}
+                <Link to="/login"> Se connecter </Link> {/* Utilisez Link pour la navigation */}
               </button>
               <img src={line} alt="image1" className='w-56 mb-0' />
               <button className='flex flex-row justify-center items-center bg-[#FFFFFF] rounded-3xl text-xs py-3 px-6'> Se connecter avec 
