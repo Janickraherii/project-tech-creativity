@@ -1,26 +1,29 @@
-import React, { useState, useRef, useEffect} from 'react'; 
+import React, { useState, useEffect, useRef } from 'react'; 
 import { Link } from 'react-router-dom';
+import Header from '../components/Header'; 
+import Footer from '../components/Footer';
+import pdp from '../assets/pdp.png';
 import icon1 from '../assets/majesticons_folder-line.svg';
 import icon2 from '../assets/majesticons_settings-cog-line.png';
 import icon3 from '../assets/quill_paper.svg';
 import icon4 from '../assets/Vector.svg';
-// import deco from '../assets/Component_6.svg'; 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import pdp from '../assets/pdp.png';
-
-
 
 function Profile() {
     const [user, setUser] = useState(null);
     const [coverImageUrl, setCoverImageUrl] = useState('');
-    const fileInputRef = useRef(null); 
+    const fileInputRef = useRef(null); // Déclarez la référence
+    const userEmail = "t@gmail.com"; 
 
     useEffect(() => {
-        // Appel à votre API pour récupérer les données de l'utilisateur
+        // Appel à votre API pour récupérer les données de tous les utilisateurs
         fetch('http://localhost:4000/api/users')
             .then(response => response.json())
-            .then(data => setUser(data))
+            .then(data => {
+                // Filtrer les données pour trouver l'utilisateur correspondant à l'e-mail
+                const currentUser = data.find(user => user.email === userEmail);
+                // Mettre à jour l'état de l'utilisateur avec les données filtrées
+                setUser(currentUser);
+            })
             .catch(error => console.error('Error fetching user data:', error));
     }, []);
 
@@ -54,8 +57,8 @@ function Profile() {
                             </div>
                             {user && (
                                 <div className='flex flex-col z-10 ml-10 space-y-7 text-[#2BCCC0]  font-bold text-3xl'>
-                                <p> Name : {user.firstname} {user.lastname}</p>
-                                <p className='text-black'>Nombre de votes : {user.votes}</p>
+                                <p className='text-black'> {user.firstname} {user.lastname}</p>
+                                <p className='text-black'>Nombre de votes : {user.userVote}</p>
                                 </div>
                             )}
                             </div>
@@ -84,12 +87,9 @@ function Profile() {
   </div>
 </div>
 
-
-
-    <Footer/>
-    </> 
-  
-  );
+            <Footer />
+        </>
+    );
 }
 
 export default Profile;
