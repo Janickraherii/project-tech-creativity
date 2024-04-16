@@ -24,10 +24,8 @@ function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        // Ici, vous pouvez traiter le token ou les données de l'utilisateur si nécessaire
-        // document.cookie = `token=${data.token}; max-age=86400; Secure`;
-        // Redirection vers la page d'accueil
-        navigate('/');
+        document.cookie = `token=${data.token}; max-age=86400; Secure`;
+        navigate('/profile');
       } else {
         setError('Identifiants invalides. Veuillez réessayer.');
       }
