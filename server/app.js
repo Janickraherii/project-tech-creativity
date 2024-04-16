@@ -4,21 +4,22 @@ const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const cors = require('cors');
-
 const app = express();
 
+// import routes
+const { createUser } = require('../server/controllers/userController');
+const { login } = require ('../server/controllers/authController');
 
 const userRouter = require('./routes/userRoutes');
-app.use('/users', userRouter);
+const authRoutes = require('./routes/authRoutes');
 
-// Use the cors middleware
+// middleware
 app.use(cors());
 app.use(express.json());
 
-// Import the createUser function from userController.js
-const { createUser } = require('../server/controllers/userController');
 
-// Route for creating a new user
+// Creation route
+app.use('/users', userRouter);
 app.post('/api/users', createUser);
 app.get('/api/users', async (req, res) => {
   try {
@@ -32,7 +33,33 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
+app.use('/api/login', authRoutes);
+app.post('/api/login', login);
+// function authenticateSession(req, res, next) {
+//   // Vérifie si l'utilisateur est authentifié en vérifiant la présence d'une propriété user dans l'objet req
+//   if (!req.user) {
+//     return res.status(401).json({ message: "Non authentifié. Veuillez vous connecter." });
+//   }
+//   next(); // Passe à l'étape suivante dans le middleware
+// }
+
+// // Route GET pour vérifier l'authentification de l'utilisateur
+// app.get('/api/auth', authenticateSession, (req, res) => {
+//   // Si l'authentification est réussie, renvoie un message approprié
+//   res.status(200).json({ message: 'Authentification réussie.' });
+// });
+
+app.get('/test', (req, res) => {
+
+  res.send('Hello World!');
+});
+
+
+
 const port = 4000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+module.exports = app;
