@@ -3,9 +3,11 @@ import { useDropzone } from 'react-dropzone';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 function Dropzone() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate(); // Utilisez useNavigate à la place de useHistory
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -16,6 +18,11 @@ function Dropzone() {
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: 'image/*' });
+
+  const handleContinue = () => {
+    // Naviguer vers la page stack avec les données d'image
+    navigate("/stackuser", { state: { selectedImage } });
+  };
 
   return (
     <div>
@@ -38,18 +45,17 @@ function Dropzone() {
             )}
           </div>
           <div className='flex justify-center'>
-          {!selectedImage ? (
-  <Link 
-    to="/useapi" 
-    className='bg-[#515CDA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white text-center' 
-    disabled
-  >
-    Choisir un template
-  </Link>
-            ) : (
-              <Link to={{ pathname: "/stack", state: { selectedImage: selectedImage }}}>
-                <button className='bg-[#CF51DA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white'>Continuer...</button>
+            {!selectedImage ? (
+              <Link 
+                to="/useapi" 
+                className='bg-[#515CDA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white text-center' 
+                disabled
+              >
+                Choisir un template
               </Link>
+            ) : (
+              // Utilisez la fonction handleContinue pour gérer le clic sur le bouton "Continuer"
+              <button onClick={handleContinue} className='bg-[#CF51DA] py-2 w-52 mt-5 mb-10 rounded-3xl text-white'>Continuer...</button>
             )}
           </div>
         </div>
