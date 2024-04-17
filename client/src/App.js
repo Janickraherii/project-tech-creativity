@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import Modification from './pages/Modification';
 import UseApi from './pages/UseApi';
 import Stack from './pages/Stack';
+import StackUser from './pages/StackUser';
 import ContactUsForm from './pages/ContactForm';
 import Actuality from './pages/Actuality';
 import Login from './pages/Login';
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/contactus" element={<ContactUsForm />} />
           <Route path="/useapi" element={<UseApi/>} />
           <Route path="/stack" element={<Stack />} /> 
+          <Route path="/stackuser" element={<StackUser />} /> 
           <Route path="/actualites" element={<Actuality />} />
           <Route path="/login" element={<Login />} />
           <Route path="/privacy" element={<PolitiqueConfidentialite />} />
